@@ -22,12 +22,12 @@ long_description = (
     'Contributors\n'
     '************\n'
     + '\n' +
-    read('CONTRIBUTORS.txt')
+    read('docs', 'CONTRIBUTORS.rst')
     + '\n' +
-    'Change history\n'
+    'History\n'
     '**************\n'
     + '\n' +
-    read('CHANGES.txt')
+    read('docs', 'HISTORY.rst')
     + '\n' +
    'Download\n'
     '********\n')
