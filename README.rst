@@ -45,7 +45,7 @@ this:
 
 
 Supported options:
-------------------
+==================
 
 * output: Specify a path to the output file. The path will be created if it does
   not exist.
