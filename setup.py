@@ -63,7 +63,10 @@ setup(name='collective.recipe.htpasswd',
                         'setuptools',
                         ],
       tests_require=tests_require,
-      extras_require=dict(tests=tests_require),
+      extras_require=dict(
+        tests = tests_require,
+        md5 = ['python-aprmd5', ],
+        ),
       test_suite='collective.recipe.htpasswd.tests.test_docs.test_suite',
       entry_points=entry_points,
       )
