@@ -14,11 +14,11 @@ version = '0.1a1'
 long_description = (
     read('README.rst')
     + '\n' +
-    'Detailed Documentation\n'
-    '**********************\n'
-    + '\n' +
-    read('src', 'collective', 'recipe', 'htpasswd', 'README.txt')
-    + '\n' +
+    #'Detailed Documentation\n'
+    #'**********************\n'
+    #+ '\n' +
+    #read('src', 'collective', 'recipe', 'htpasswd', 'README.txt')
+    #+ '\n' +
     'Contributors\n'
     '************\n'
     + '\n' +
