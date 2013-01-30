@@ -59,7 +59,7 @@ class Recipe(object):
                 else:
                     self.credentials.append((username, password))
 
-            if self.credentials:
+            if not self.credentials:
                 raise zc.buildout.UserError('You must specified at lest one '
                                             'pair of credentials.')
 
