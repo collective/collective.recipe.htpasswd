@@ -60,8 +60,8 @@ Supported options
 Development
 ===========
 
-- Code repository: http://github.com/nueces/collective.recipe.htpasswd
-- Report bugs at http://github.com/nueces/collective.recipe.htpasswd/issues
+- Code repository: http://github.com/collective/collective.recipe.htpasswd
+- Report bugs at http://github.com/collective/collective.recipe.htpasswd/issues
 
 
 .. _htpasswd program: http://httpd.apache.org/docs/2.4/programs/htpasswd.html
