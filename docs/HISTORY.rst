@@ -1,4 +1,4 @@
-0.1a2 (unreleased)
+0.1a2 (2013-02-18)
 ------------------
 
 - Added support for the apr md5 algorithm.
