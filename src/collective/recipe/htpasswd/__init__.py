@@ -10,6 +10,13 @@ import string
 
 import zc.buildout
 
+try:
+    import aprmd5
+except ImportError:
+    HAVE_APRMD5 = False
+else:
+    HAVE_APRMD5 = True
+
 
 class Recipe(object):
     """ This recipe should not be used to update an existing htpasswd file
@@ -22,11 +29,15 @@ class Recipe(object):
         self.options = options
         self.logger = logging.getLogger(self.name)
 
-        supported_algorithms = ('crypt', 'plain')
+        supported_algorithms = ('crypt', 'plain', 'md5')
         if 'algorithm' in options:
             if options['algorithm'].lower() not in supported_algorithms:
                 raise zc.buildout.UserError("Currently the only supported "
                                             "method are 'crypt' and 'plain'.")
+            elif options['algorithm'].lower() == 'md5' and not HAVE_APRMD5:
+                raise zc.buildout.UserError('You need the python-aprmd5 module '
+                                            'installed in order to use the MD5 '
+                                            'algorithm')
             else:
                 self.algorithm = options['algorithm'].lower()
         else:
@@ -103,12 +114,30 @@ class Recipe(object):
         #FIXME: This method only works for the salt requiered for the crypt
         # algorithm.
         characters = string.ascii_letters + string.digits + './'
-        return random.choice(characters) + random.choice(characters)
+        if self.algorithm == 'crypt':
+            slen = 2
+        elif self.algorithm == 'md5':
+            slen = 8
+        elif self.algorithm == 'sha1':
+            raise NotImplementedError('The salt fot the SHA1 algorithm has not '
+                                      'been implemented yet.')
+        elif self.algorithm == 'plain':
+            raise RuntimeError("The plain algorithm don't must be call to the "
+                               "salt method")
+        else:
+            raise ValueError("Unknow algorithm '%s' in the salt method" %
+                             self.algorithm)
+
+        sres = ''
+        while len(sres) < slen:
+                sres += random.choice(characters)
+
+        return sres
 
     def mkhash(self, password):
         """ Returns a the hashed password as a string.
         """
-        # TODO: Add support for MD5 and SHA1 algorithms.
+        # TODO: Add support for the SHA1 algorithm.
         if self.algorithm == 'crypt':
             if len(password) > 8:
                 self.logger.warning((
@@ -117,8 +146,7 @@ class Recipe(object):
                     'will be discarded.'))
             return crypt.crypt(password, self.salt())
         elif self.algorithm == 'md5':
-            raise NotImplementedError(
-                'The MD5 algorithm has not been implemented yet.')
+            return aprmd5.md5_encode(password, self.salt())
         elif self.algorithm == 'plain':
             return password
         elif self.algorithm == 'sha1':
