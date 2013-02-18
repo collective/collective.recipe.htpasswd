@@ -15,9 +15,9 @@ compatible with the `htpasswd program`_ that come with the
 supports. This formats, with some minor diffenrences in the case of the plain
 method, are also `supported by the auth_basic module`_ of the nginx http server.
 
-At this moment this recipe support plain, crypt and _`APR md5 algorithms` for
-storage passwords. The crypt algorithm is based on the system's crypt() routine,
-so it inherits its limitations (see: `man 5 crypt`_).
+At this moment this recipe support plain, crypt and md5 (`APR md5 algorithm`_)
+for storage passwords. The crypt algorithm is based on the system's crypt()
+routine, so it inherits its limitations (see: `man 5 crypt`_).
 
 
 *Note:* The plaintext passowrds are only accepted by the Apache httpd server on
@@ -45,10 +45,13 @@ this:
         nutz:crackme
 
 
-For use the md5 method you should install the python-aprmd5 package and its
-build depencies. In Debian GNU/Linux install the package libaprutil1-dev.
-Modify the part in the ``buildout.cfg`` like this, to include the extras_require
-packages for the md5 method:
+For use the md5 method this recipe relies in the `python-aprmd5 package`_, then
+to install it you must modify the buildout part to include the md5
+``extras_require`` setting and install the build depencies for the python-aprmd5
+package. In Debian GNU/Linux the package is the `libaprutil1-dev`_. It contain
+the develoment headers of the `Apache Portable Runtime Utility Library`_.
+
+After that modify the part in the ``buildout.cfg`` it must look like this:
 
 .. code-block:: ini
 
@@ -64,16 +67,23 @@ packages for the md5 method:
         nutz:crackme
 
 
+*Note:* For a `bug in zc.buildout`_ if you need to use this recipe with the md5
+and the plain or crypt algorithms in two o more parts, you must declare first
+the one that use the md5 ``extras_require``.
+
+
 Supported options
 =================
 
 * output: Specify a path to the output file. The path will be created if it does
   not exist.
-* credentials: One set per line of credentials formed by username and password separated by a
-  colon. e.g. <username>:<password>.
-* mode: Specified with octal numbers, as in the chmod program. e.g. 640. If it
-  not set the file are created with the mask mode from the system enviroment.
-* algorithm: The supported options are 'crypt' and 'plain'. Default to 'cypt'.
+* credentials: One set per line of credentials formed by username and password
+  separated by a colon. e.g. ``<username>:<password>``.
+* mode: Specified with octal numbers, as in the chmod program. e.g. ``640``.
+  If it not set the file are created with the mask mode from the system
+  enviroment.
+* algorithm: The supported options are ``crypt``, ``plain`` and ``md5``.
+  Default to ``cypt``.
 
 
 Development
@@ -89,3 +99,7 @@ Development
 .. _password formats: http://httpd.apache.org/docs/2.2/misc/password_encryptions.html
 .. _supported by the auth_basic module: http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic
 .. _man 5 crypt: http://manpages.debian.net/cgi-bin/man.cgi?query=crypt&sektion=3
+.. _python-aprmd5 package: http://www.herzbube.ch/python-aprmd5
+.. _libaprutil1-dev: http://packages.debian.org/stable/libaprutil1-dev
+.. _Apache Portable Runtime Utility Library: http://apr.apache.org/
+.. _bug in zc.buildout: https://bugs.launchpad.net/zc.buildout/+bug/583752

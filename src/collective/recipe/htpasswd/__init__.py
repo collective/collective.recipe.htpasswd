@@ -137,7 +137,7 @@ class Recipe(object):
     def mkhash(self, password):
         """ Returns a the hashed password as a string.
         """
-        # TODO: Add support for MD5 and SHA1 algorithms.
+        # TODO: Add support for the SHA1 algorithm.
         if self.algorithm == 'crypt':
             if len(password) > 8:
                 self.logger.warning((
