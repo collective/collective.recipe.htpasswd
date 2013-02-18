@@ -1,7 +1,8 @@
 0.1a2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Added support for the apr md5 algorithm.
+  [Juan A. Diaz (nueces)]
 
 
 0.1a1 (2013-01-30)
