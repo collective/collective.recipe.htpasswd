@@ -44,6 +44,21 @@ this:
         nueces:secret
         nutz:crackme
 
+One example using the ``sha1`` algorithm.
+
+.. code-block:: ini
+
+    [buildout]
+    parts = htpasswd
+
+    [htpasswd]
+    recipe = collective.recipe.htpasswd
+    output = ${buildout:directory}/etc/htpasswd
+    algorithm = sha1
+    credentials =
+        nueces:secret
+        nutz:crackme
+
 
 For use the md5 method this recipe relies in the `python-aprmd5 package`_, then
 to install it you must modify the buildout part to include the md5
