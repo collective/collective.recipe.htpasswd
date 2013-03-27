@@ -1,7 +1,8 @@
 0.1a3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Added support for the sha1 algorithm.
+  [Juan A. Diaz (nueces)]
 
 
 0.1a2 (2013-02-18)
