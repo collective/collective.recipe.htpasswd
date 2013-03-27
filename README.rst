@@ -44,7 +44,7 @@ this:
         nueces:secret
         nutz:crackme
 
-One example using the ``sha1`` algorithm.
+One example using the ``sha1`` algorithm:
 
 .. code-block:: ini
 
@@ -60,11 +60,12 @@ One example using the ``sha1`` algorithm.
         nutz:crackme
 
 
-For use the md5 method this recipe relies in the `python-aprmd5 package`_, then
-to install it you must modify the buildout part to include the md5
-``extras_require`` setting and install the build depencies for the python-aprmd5
-package. In Debian GNU/Linux the package is the `libaprutil1-dev`_. It contain
-the develoment headers of the `Apache Portable Runtime Utility Library`_.
+For use the ``md5`` algorithm this recipe relies in the
+`python-aprmd5 package`_, then to install it you must modify the buildout part
+to include the md5 ``extras_require`` setting and install the build depencies
+for the python-aprmd5 package. In Debian GNU/Linux the package is the
+`libaprutil1-dev`_. It contain the develoment headers of the
+`Apache Portable Runtime Utility Library`_.
 
 After that modify the part in the ``buildout.cfg`` it must look like this:
 
