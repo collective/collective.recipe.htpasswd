@@ -8,6 +8,9 @@ import os
 import random
 import string
 
+from base64 import b64encode
+from hashlib import sha1
+
 import zc.buildout
 
 try:
@@ -29,11 +32,12 @@ class Recipe(object):
         self.options = options
         self.logger = logging.getLogger(self.name)
 
-        supported_algorithms = ('crypt', 'plain', 'md5')
+        supported_algorithms = ('crypt', 'plain', 'md5', 'sha1')
         if 'algorithm' in options:
             if options['algorithm'].lower() not in supported_algorithms:
-                raise zc.buildout.UserError("Currently the only supported "
-                                            "method are 'crypt' and 'plain'.")
+                raise zc.buildout.UserError("Unknow algorithm. see "
+                                            "documentation for a list of "
+                                            "supported algorithms.")
             elif options['algorithm'].lower() == 'md5' and not HAVE_APRMD5:
                 raise zc.buildout.UserError('You need the python-aprmd5 module '
                                             'installed in order to use the MD5 '
@@ -111,22 +115,17 @@ class Recipe(object):
     def salt(self):
         """ Returns a two-character string chosen from the set [a–zA–Z0–9./].
         """
-        #FIXME: This method only works for the salt requiered for the crypt
-        # algorithm.
         characters = string.ascii_letters + string.digits + './'
         if self.algorithm == 'crypt':
             slen = 2
         elif self.algorithm == 'md5':
             slen = 8
-        elif self.algorithm == 'sha1':
-            raise NotImplementedError('The salt fot the SHA1 algorithm has not '
-                                      'been implemented yet.')
-        elif self.algorithm == 'plain':
-            raise RuntimeError("The plain algorithm don't must be call to the "
-                               "salt method")
+        elif self.algorithm in ('pain', 'sha1'):
+            raise RuntimeError("The '%s' algorithm don't must be call to the "
+                               "salt method" % self.algorithm)
         else:
-            raise ValueError("Unknow algorithm '%s' in the salt method" %
-                             self.algorithm)
+            raise RuntimeError("Unknow algorithm '%s' in the salt method" %
+                               self.algorithm)
 
         sres = ''
         while len(sres) < slen:
@@ -137,7 +136,6 @@ class Recipe(object):
     def mkhash(self, password):
         """ Returns a the hashed password as a string.
         """
-        # TODO: Add support for the SHA1 algorithm.
         if self.algorithm == 'crypt':
             if len(password) > 8:
                 self.logger.warning((
@@ -150,8 +148,7 @@ class Recipe(object):
         elif self.algorithm == 'plain':
             return password
         elif self.algorithm == 'sha1':
-            raise NotImplementedError(
-                'The SHA1 algorithm has not been implemented yet.')
+            return b64encode(sha1(password).digest())
         else:
             raise ValueError(
                 "The algorithm '%s' is not supported." % self.algorithm)
