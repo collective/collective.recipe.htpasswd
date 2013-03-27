@@ -1,4 +1,4 @@
-0.1a3 (unreleased)
+0.1a3 (2013-03-27)
 ------------------
 
 - Added support for the sha1 algorithm.
