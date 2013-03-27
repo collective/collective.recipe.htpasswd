@@ -15,7 +15,7 @@ compatible with the `htpasswd program`_ that come with the
 supports. This formats, with some minor diffenrences in the case of the plain
 method, are also `supported by the auth_basic module`_ of the nginx http server.
 
-At this moment this recipe support plain, crypt and md5 (`APR md5 algorithm`_)
+This recipe support crypt, md5 (`APR md5 algorithm`_), plain and sha1 algorithms
 for storage passwords. The crypt algorithm is based on the system's crypt()
 routine, so it inherits its limitations (see: `man 5 crypt`_).
 
@@ -82,8 +82,8 @@ Supported options
 * mode: Specified with octal numbers, as in the chmod program. e.g. ``640``.
   If it not set the file are created with the mask mode from the system
   enviroment.
-* algorithm: The supported options are ``crypt``, ``plain`` and ``md5``.
-  Default to ``cypt``.
+* algorithm: The supported options are ``crypt``, ``md5``, ``plain`` and
+  ``sha1``. Default to ``cypt``.
 
 
 Development
