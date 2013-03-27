@@ -1,9 +1,3 @@
-0.1a4 (unreleased)
-------------------
-
-- Nothing changed yet.
-
-
 0.1a3 (unreleased)
 ------------------
 
